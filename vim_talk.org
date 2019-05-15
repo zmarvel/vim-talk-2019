@@ -4,9 +4,9 @@
 #+OPTIONS: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
 #+OPTIONS: timestamp:t title:t toc:f todo:t |:t
 #+TITLE: Valuable Vim for the Pragmatic Programmer
-#+DATE: <2019-04-22 Mon>
+#+DATE: <2019-05-20 Mon>
 #+AUTHOR: Zack Marvel
-#+EMAIL: zmarvel@ZMARVEL-PC
+#+EMAIL: zpmarvel@gmail.com
 #+LANGUAGE: en
 #+SELECT_TAGS: export
 #+EXCLUDE_TAGS: noexport
@@ -15,7 +15,7 @@
 #+LaTeX_CLASS: beamer
 #+LaTeX_CLASS_options: [bigger,allowframebreaks]
 #+BIND: org-beamer-frame-default-options "allowframebreaks"
-
+#+BEAMER_HEADER: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Outline}\tableofcontents[currentsection]\end{frame}}
 
 * Basic usage
 ** Opening and closing Vim
@@ -28,9 +28,8 @@
    - To close,
      1. Escape
      2. ~:w~ to save (write)
-     3. ~:q~ to quit (or ~:q!~ to quit without saving)
-
-     ~:wq~ or just ~:x~ to save /and/ quit.
+     3. ~:q[!]~ to quit
+   - ~:wq~ or just ~:x~ to save /and/ quit.
 ** Modes
    | Name         | Activated by                 |
    |--------------+------------------------------|
@@ -41,10 +40,9 @@
    | Ex           | ~:~                          |
    - Normal mode for moving around and manipulating text
    - Insert mode for typing new things
-   - Visual mode for /visually/ selections (vi can't do this!)
-   - Visual block mode for "block" selections
+   - Visual mode for /visually/ selecting (vi can't do this!)
+   - Visual block mode for "block" (columnar) selections
    - Ex mode for executing commands like ~wq~
-* Visual block mode
 ** Visual block mode demo
 * Normal mode
 ** Cut/copy/paste
@@ -59,8 +57,8 @@
     | ~i~       | before cursor             |
     | ~a~       | /after/ cursor            |
     | ~s~       | /substitute/ under cursor |
-    | ~A~       | /after/ current line      |
     | ~I~       | before current line       |
+    | ~A~       | /after/ current line      |
     | ~S~       | /substitute/ current line |
 ** Auto-indent
     | Keystroke      | Description                                     |
@@ -82,82 +80,81 @@
     | ~w~, ~b~       | Forward a /word/, /back/ a word                |
 * Insert mode
 ** Shortcuts
-~Ctrl-w~ deletes the last word---who wants to hold down backspace?
+~Ctrl-w~ deletes the last word. No more holding down backspace!
 * Ex mode
 ** Search and replace
-~:%s/REPLACE/WITH/g~
+   - ~:%s/REPLACE/WITH/g~ replace all in document
+   - ~:s/REPLACE/WITH/g~ replace all on current line
+   - ~:s/REPLACE/WITH/gc~ ask for confirmation
+   - ~:s/REPLACE/WITH/~ replace first on current line
 ** Explore
    - ~:E[xplore]~
    - Tree-like view of files
 * More advanced shortcuts
 ** "Dumb" completion
-   ~Ctrl-P~ does really basic auto-completion (based only on frequency of a word)!
+   ~Ctrl-N~ does really basic auto-completion (based only on frequency of a word)!
 ** Repeating actions
    - Actions are things you do in normal mode, like deleting a word (~dw~).
    - ~.~ repeats the last action (suppose you change your mind and you want to delete the next word, too).
 ** Actions and movements
-   - Did you notice that deleting a line (~dd~) and deleting a word (~dw~) both start with ~d~? Hmm.
-   - The "action" is ~d~ and the movement is the second part!
-   - We can also delete a letter (~dc~) or a whole block (~d}~ for forward, ~d{~ for backward)!
-   - These rules apply to all the actions and movements we already learned. There are more!
+   - ~dd~ deletes a line and ~dw~ deletes a word. Hmm...
+   - ~d~ is the "action" and ~w~ is a movement!
+   - Can also delete a letter/character (~dc~) or a whole block (~d}~ for forward, ~d{~ for backward)
+   - These rules apply to ~y~, ~=~, etc.
 ** Macros
-   - Do you ever find yourself doing repetitive actions?
+   - Repetitive modifications?
    - ~q<LETTER>~ to record a macro.
    - ~@<LETTER>~ to do the macro.
    - ~@@~ to do the last macro again.
 ** Macros demo
-* Stuff you probably miss from your favorite editor when you have to use Vim
-* "Go to definition"
-** Generating ctags
-   - Install Exuberant Ctags (I think it comes with the BATC CentOS image).
-   - ~ctags -R <PROJECT DIRECTORY>~
-   - You get a ~tags~ file
-** Using ctags
-   - Run ~vim~ in the same folder as your ~tags~ file
-   - Put your cursor over a symbol and press ~Ctrl-]~
-   - If there are multiple matching tags, ~:tn[ext]~ and ~:tp[rev]~
-   - ~:ts[elect]~ pops up a window so you can choose
-   - ~:tag~ lets you search for a symbol
-** Ctags demo
-* "Find occurrances"
-** grep
-   - Ever find yourself using ~grep~ on the command line and copy-pasting file names and line numbers into Vim?
-   - ~:grep~ works a lot like the ~grep~ you know and love
+* Stuff you probably miss from your favorite editor
+** "Go to definition"
+*** Generating ctags
+    - Exuberant Ctags: ~ctags -R <PROJECT DIRECTORY>~ produces ~tags~ file
+*** Using ctags
+    - Run ~vim~ in the same folder as ~tags~ or ~:set tags=../path/to/tags~
+    - Put cursor on a symbol and press ~Ctrl-]~ in normal mode
+    - If multiple matching tags, ~:tn[ext]~ and ~:tp[rev]~
+    - ~:ts[elect]~ pops up a window so you can choose
+    - ~:tag~ lets you search for a symbol
+*** Ctags demo
+** "Find occurrences:" it's just ~grep~
+   - Using ~grep~ on the command line and copy-pasting file names and line numbers into Vim?
+   - ~:grep~ works a lot like... ~grep~
    - ~:clist~ to see all matches
    - ~:cc N~ to go to match N
    - ~:cn[ext]~ and ~:cp[rev]~
-* Jumping to build errors
-** make
-   - Ever find yourself using ~grep~ on the command line and copy-pasting file names and line numbers into Vim?
-   - ~:make~ is the answer!
-   - Vim parses your compiler warnings and errors and takes you to them
-   - Like ~:grep~, use ~:clist~, ~:cn[ext]~, and ~:cprev~
-   - You can also use this for tools besides make!
-** Make demo
-** Python unittest demo
-* Multiple buffers
-** Basic buffer manipulation
-| Command                | Description                 |
-|------------------------+-----------------------------|
-| ~:e FILENAME~          | Open a file in a new buffer |
-| ~:ls~                  | See all the open buffers    |
-| ~:bn[ext]~, ~:bp[rev]~ | Next, previous buffer       |
-| ~:bd[!]~               | Delete a buffer             |
-| ~:bN~                  | Go to buffer N              |
-* Split screen
-** Basic commands
-   | Command           | Description                                   |
-   |-------------------+-----------------------------------------------|
-   | ~:sp [FILENAME]~  | Horizontal split                              |
-   | ~:vsp [FILENAME]~ | Vertical split                                |
-   | ~:close~          | Close the split (without deleting the buffer) |
-** Some shortcuts
-   | Shortcut    | Description                   |
-   |-------------+-------------------------------|
-   | ~C-w =~     | Make the splits equally-sized |
-   | ~C-w o~     | Close all /other/ splits      |
-   | ~C-w w~     | Cycles through splits         |
-   | ~C-w ARROW~ | Navigate between splits       |
+** Jumping to build errors
+*** make
+    - Copy-pasting line numbers into vim from compiler output?
+    - Use ~:make~!
+    - Vim parses your compiler warnings and errors and takes you to them
+    - Like ~:grep~, use ~:clist~, ~:cn[ext]~, and ~:cprev~
+    - You can also use this for tools besides make!
+*** Make demo
+*** Python unittest demo
+** Multiple buffers: basic buffer manipulation
+ | Command                | Description                 |
+ |------------------------+-----------------------------|
+ | ~:e FILENAME~          | Open a file in a new buffer |
+ | ~:ls~                  | See all the open buffers    |
+ | ~:bn[ext]~, ~:bp[rev]~ | Next, previous buffer       |
+ | ~:bd[!]~               | Delete a buffer             |
+ | ~:bN~                  | Go to buffer N              |
+** Multiple buffers: split screen
+*** Basic commands
+    | Command           | Description                                   |
+    |-------------------+-----------------------------------------------|
+    | ~:sp [FILENAME]~  | Horizontal split                              |
+    | ~:vsp [FILENAME]~ | Vertical split                                |
+    | ~:close~          | Close the split (without deleting the buffer) |
+*** Some shortcuts
+    | Shortcut    | Description                   |
+    |-------------+-------------------------------|
+    | ~C-w =~     | Make the splits equally-sized |
+    | ~C-w o~     | Close all /other/ splits      |
+    | ~C-w w~     | Cycles through splits         |
+    | ~C-w ARROW~ | Navigate between splits       |
 * Configuration
 ** Basics
    - Put settings in your home directory in ~.vimrc~
@@ -167,18 +164,29 @@
    - ~:set number~
    - ~:set relativenumber~
 ** Tabs and indentation
-   - ~:set expandtab~: When I type Tab, I mean "stick in some spaces"
-   - ~:set tabstop=N~: When I type Tab, I mean "stick in N spaces"
+   - ~:set expandtab~: Stick in some spaces when I type Tab
+   - ~:set tabstop=N~: When I type Tab, stick in N spaces
    - ~:set shiftwidth=N~: tabstop for autoindentation
    - ~:set autoindent~: Indents next line to match current line
    - ~:set smartindent~: Indents intelligently for function body, ~for~ body, etc.
 ** Persistent undo
+   - ~:set undodir=~/.vim/undo~
+   - ~:set undofile~
 ** Line endings
-   - ~:set ff=unix~ to make sure the one true line-ending is used
-   - ~:set ff=dos~ and face my wrath
-* ftplugin
+   - ~:set ff=unix~ happy line endings
+   - ~:set ff=dos~ sad line endings
+** ftplugin
+   - Apply options to one type of file
+   - e.g. C programs, ~~/.vim/after/ftplugin/c.vim~
+     #+BEGIN_SRC
+set shiftwidth=2
+set softtabstop=2
+set cinoptions=(0
+     #+END_SRC
 * Templates
-* Getting help
+** Templates
+   - Create templates to be applied when e.g. ~new_file.sh~ is opened
+   - TODO: example
 * Some useful plugins
 ** a.vim
    - This is for finding "/alternate/" files
