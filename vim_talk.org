@@ -1,0 +1,196 @@
+#+OPTIONS: ':nil *:t -:t ::t <:t H:2 \n:nil ^:t arch:headline
+#+OPTIONS: author:t broken-links:nil c:nil creator:nil
+#+OPTIONS: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+OPTIONS: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+OPTIONS: timestamp:t title:t toc:f todo:t |:t
+#+TITLE: Valuable Vim for the Pragmatic Programmer
+#+DATE: <2019-04-22 Mon>
+#+AUTHOR: Zack Marvel
+#+EMAIL: zmarvel@ZMARVEL-PC
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+#+CREATOR: Emacs 26.1 (Org mode 9.1.9)
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_options: [bigger,allowframebreaks]
+#+BIND: org-beamer-frame-default-options "allowframebreaks"
+
+
+* Basic usage
+** Opening and closing Vim
+   #+BEGIN_center
+   #+ATTR_LATEX: :center :width 0.5\textwidth
+   [[./exiting_vim.jpeg]]
+   #+END_center
+** Opening and closing Vim
+   - Type ~vim FILENAME~ on the command line
+   - To close,
+     1. Escape
+     2. ~:w~ to save (write)
+     3. ~:q~ to quit (or ~:q!~ to quit without saving)
+
+     ~:wq~ or just ~:x~ to save /and/ quit.
+** Modes
+   | Name         | Activated by                 |
+   |--------------+------------------------------|
+   | Normal       | Escape                       |
+   | Insert       | ~i~, ~a~, ~s~, ~A~, ~I~, ~S~ |
+   | Visual       | ~v~                          |
+   | Visual block | ~Ctrl-v~                     |
+   | Ex           | ~:~                          |
+   - Normal mode for moving around and manipulating text
+   - Insert mode for typing new things
+   - Visual mode for /visually/ selections (vi can't do this!)
+   - Visual block mode for "block" selections
+   - Ex mode for executing commands like ~wq~
+* Visual block mode
+** Visual block mode demo
+* Normal mode
+** Cut/copy/paste
+    | Keystroke      | Description                                     |
+    |----------------+-------------------------------------------------|
+    | ~dd~           | delete line                                   |
+    | ~yy~           | copy/yank line                                |
+    | ~p~            | paste/put line                                |
+** Getting into insert mode
+    | Keystroke | Description               |
+    |-----------+---------------------------|
+    | ~i~       | before cursor             |
+    | ~a~       | /after/ cursor            |
+    | ~s~       | /substitute/ under cursor |
+    | ~A~       | /after/ current line      |
+    | ~I~       | before current line       |
+    | ~S~       | /substitute/ current line |
+** Auto-indent
+    | Keystroke      | Description                                     |
+    |----------------+-------------------------------------------------|
+    | ~==~           | indent current line                             |
+** Moving around
+    | Keystroke      | Description                                    |
+    |----------------+------------------------------------------------|
+    | ~*~            | forward search for word under cursor   |
+    | ~#~            | reverse search  for word under cursor  |
+    | ~/~            | traditional forward search                     |
+    | ~$~            | go to end of line                              |
+    | ~^~            | go to beginning of line                        |
+    | ~{~, ~}~       | go to forward, backward a block                |
+    | ~%~            | go to matching bracket                         |
+    | ~H~, ~L~, ~M~  | Top (/high/), bottom (/low/), /middle/ of page |
+    | Ctrl-f, Ctrl-b | /Forward/, /backward/ a page                   |
+    | Ctrl-u, Ctrl-d | /Up/, /down/ half a page                       |
+    | ~w~, ~b~       | Forward a /word/, /back/ a word                |
+* Insert mode
+** Shortcuts
+~Ctrl-w~ deletes the last word---who wants to hold down backspace?
+* Ex mode
+** Search and replace
+~:%s/REPLACE/WITH/g~
+** Explore
+   - ~:E[xplore]~
+   - Tree-like view of files
+* More advanced shortcuts
+** "Dumb" completion
+   ~Ctrl-P~ does really basic auto-completion (based only on frequency of a word)!
+** Repeating actions
+   - Actions are things you do in normal mode, like deleting a word (~dw~).
+   - ~.~ repeats the last action (suppose you change your mind and you want to delete the next word, too).
+** Actions and movements
+   - Did you notice that deleting a line (~dd~) and deleting a word (~dw~) both start with ~d~? Hmm.
+   - The "action" is ~d~ and the movement is the second part!
+   - We can also delete a letter (~dc~) or a whole block (~d}~ for forward, ~d{~ for backward)!
+   - These rules apply to all the actions and movements we already learned. There are more!
+** Macros
+   - Do you ever find yourself doing repetitive actions?
+   - ~q<LETTER>~ to record a macro.
+   - ~@<LETTER>~ to do the macro.
+   - ~@@~ to do the last macro again.
+** Macros demo
+* Stuff you probably miss from your favorite editor when you have to use Vim
+* "Go to definition"
+** Generating ctags
+   - Install Exuberant Ctags (I think it comes with the BATC CentOS image).
+   - ~ctags -R <PROJECT DIRECTORY>~
+   - You get a ~tags~ file
+** Using ctags
+   - Run ~vim~ in the same folder as your ~tags~ file
+   - Put your cursor over a symbol and press ~Ctrl-]~
+   - If there are multiple matching tags, ~:tn[ext]~ and ~:tp[rev]~
+   - ~:ts[elect]~ pops up a window so you can choose
+   - ~:tag~ lets you search for a symbol
+** Ctags demo
+* "Find occurrances"
+** grep
+   - Ever find yourself using ~grep~ on the command line and copy-pasting file names and line numbers into Vim?
+   - ~:grep~ works a lot like the ~grep~ you know and love
+   - ~:clist~ to see all matches
+   - ~:cc N~ to go to match N
+   - ~:cn[ext]~ and ~:cp[rev]~
+* Jumping to build errors
+** make
+   - Ever find yourself using ~grep~ on the command line and copy-pasting file names and line numbers into Vim?
+   - ~:make~ is the answer!
+   - Vim parses your compiler warnings and errors and takes you to them
+   - Like ~:grep~, use ~:clist~, ~:cn[ext]~, and ~:cprev~
+   - You can also use this for tools besides make!
+** Make demo
+** Python unittest demo
+* Multiple buffers
+** Basic buffer manipulation
+| Command                | Description                 |
+|------------------------+-----------------------------|
+| ~:e FILENAME~          | Open a file in a new buffer |
+| ~:ls~                  | See all the open buffers    |
+| ~:bn[ext]~, ~:bp[rev]~ | Next, previous buffer       |
+| ~:bd[!]~               | Delete a buffer             |
+| ~:bN~                  | Go to buffer N              |
+* Split screen
+** Basic commands
+   | Command           | Description                                   |
+   |-------------------+-----------------------------------------------|
+   | ~:sp [FILENAME]~  | Horizontal split                              |
+   | ~:vsp [FILENAME]~ | Vertical split                                |
+   | ~:close~          | Close the split (without deleting the buffer) |
+** Some shortcuts
+   | Shortcut    | Description                   |
+   |-------------+-------------------------------|
+   | ~C-w =~     | Make the splits equally-sized |
+   | ~C-w o~     | Close all /other/ splits      |
+   | ~C-w w~     | Cycles through splits         |
+   | ~C-w ARROW~ | Navigate between splits       |
+* Configuration
+** Basics
+   - Put settings in your home directory in ~.vimrc~
+   - Settings are configured with ~set SETTING~
+   - They can generally be turned off with ~set noSETTING~
+** Line numbers
+   - ~:set number~
+   - ~:set relativenumber~
+** Tabs and indentation
+   - ~:set expandtab~: When I type Tab, I mean "stick in some spaces"
+   - ~:set tabstop=N~: When I type Tab, I mean "stick in N spaces"
+   - ~:set shiftwidth=N~: tabstop for autoindentation
+   - ~:set autoindent~: Indents next line to match current line
+   - ~:set smartindent~: Indents intelligently for function body, ~for~ body, etc.
+** Persistent undo
+** Line endings
+   - ~:set ff=unix~ to make sure the one true line-ending is used
+   - ~:set ff=dos~ and face my wrath
+* ftplugin
+* Templates
+* Getting help
+* Some useful plugins
+** a.vim
+   - This is for finding "/alternate/" files
+   - Handy for flipping between C source and header files!
+   - ~:A~
+** vim-sensible
+   - Some "sensible" defaults
+   - Enable ruler
+   - Enable syntax highlighting
+   - Etc.
+** ctrlp.vim
+   - Fuzzy file searching
+   - Fast way to navigate between files in a tree
+** syntastic
+** youcompleteme
