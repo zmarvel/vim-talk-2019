@@ -9,3 +9,4 @@ all: 01_visual_block_mode.o 02_macros 03_ctags
 clean:
 	rm -f 01_visual_block_mode.o 02_macros
 	make -C 03_ctags clean
+	make -C 05_make clean
