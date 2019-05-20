@@ -41,10 +41,12 @@
    - Normal mode for moving around and manipulating text
    - Insert mode for typing new things
    - Visual mode for /visually/ selecting (vi can't do this!)
-   - Visual block mode for "block" (columnar) selections
+   - Visual block mode for "block" (column) selection
    - Ex mode for executing commands like ~wq~
 ** Visual block mode demo
 * Normal mode
+** Getting into normal mode
+   Press Escape.
 ** Cut/copy/paste
     | Keystroke      | Description                                     |
     |----------------+-------------------------------------------------|
@@ -60,6 +62,11 @@
     | ~I~       | before current line       |
     | ~A~       | /after/ current line      |
     | ~S~       | /substitute/ current line |
+** Undo
+   | Keystroke | Description |
+   |-----------+-------------|
+   | ~u~       | undo        |
+   | ~Ctrl-r~  | redo        |
 ** Auto-indent
     | Keystroke      | Description                                     |
     |----------------+-------------------------------------------------|
@@ -96,9 +103,9 @@
 ** Repeating actions
    - Actions are things you do in normal mode, like deleting a word (~dw~).
    - ~.~ repeats the last action (suppose you change your mind and you want to delete the next word, too).
-** Actions and movements
+** Verbs and nouns, oh my!
    - ~dd~ deletes a line and ~dw~ deletes a word. Hmm...
-   - ~d~ is the "action" and ~w~ is a movement!
+   - ~d~ is the "verb" and ~w~ is the "noun!"
    - Can also delete a letter/character (~dc~) or a whole block (~d}~ for forward, ~d{~ for backward)
    - These rules apply to ~y~, ~=~, etc.
 ** Macros
@@ -124,6 +131,7 @@
    - ~:clist~ to see all matches
    - ~:cc N~ to go to match N
    - ~:cn[ext]~ and ~:cp[rev]~
+*** Demo
 ** Jumping to build errors
 *** make
     - Copy-pasting line numbers into vim from compiler output?
@@ -186,7 +194,7 @@ set cinoptions=(0
 * Templates
 ** Templates
    - Create templates to be applied when e.g. ~new_file.sh~ is opened
-   - TODO: example
+*** Demo
 * Some useful plugins
 ** a.vim
    - This is for finding "/alternate/" files
@@ -201,4 +209,7 @@ set cinoptions=(0
    - Fuzzy file searching
    - Fast way to navigate between files in a tree
 ** syntastic
+   - Marks syntax/compiler errors (like Word spell-check)
 ** youcompleteme
+   - More intelligent, multi-language completion
+* Questions

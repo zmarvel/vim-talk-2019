@@ -1,0 +1,25 @@
+
+
+Hi, I'm Zack Marvel. I've been working on MCS since I started at Ball, around a
+year ago. Today I'm going to talk about the Vim editor and hopefully help you
+understand how to do things in Vim that you can already do in your favorite
+editor.
+
+
+I have a few questions for you, just to get a feel for how familiar you
+already are with Vim.
+
+- How many people have no idea what Vim is?
+- How many people have never used Vim before?
+- How many people use it at least once a month?
+- At least once a week?
+- How many prefer Vim to other editors?
+
+
+Even if Vim isn't your daily driver, when you have to edit a file on a remote
+Linux system, it's just about always there. I want to convince you that, even
+without any plugins, Vim is a very complete editor for C and C++ development.
+
+We're gonna cover a lot of topics, and I don't expect you to ingest everything
+on these slides. I just want you to be aware of these features, and you can
+refer to these slides or another cheatsheet in the future.
